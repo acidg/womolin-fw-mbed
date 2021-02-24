@@ -1,0 +1,7 @@
+{
+    "WOMOLIN_V2": {
+        "inherits": [
+            "MCU_STM32L476xG"
+        ]
+    }
+}
