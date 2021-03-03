@@ -2,6 +2,7 @@
     "WOMOLIN_V2": {
         "inherits": [
             "MCU_STM32L476xG"
-        ]
+        ],
+        "device_name": "STM32L476ZGTx"
     }
 }
