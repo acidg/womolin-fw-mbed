@@ -14,7 +14,7 @@ The WomoLIN protocol is based on CAN bus with 11-bit message identifiers (CAN 2.
 
 # Software Layer
 
-There are two kind of messages on the bus:
+There are two kinds of messages on the bus:
 
 - state broadcasts
 - commands
@@ -59,7 +59,7 @@ If multiple virtual devices of the same type are configured (e.g. two tank senso
 
 The CAN bus protocol uses messages with 11-bit message identifiers.
 The protocol prioritizes messages with higher message ID.
-In order to be prioritize commands on the bus, the message ID for command messages has to be higher than for state broadcasts.
+In order to prioritize command messages on the bus, the message ID for command messages has to be higher than for state broadcast messages.
 
 Therefore, WomoLIN uses CAN bus message identifiers in the following format:
 
@@ -82,7 +82,7 @@ A state broadcast message must contain all states of the virtual device, includi
 The message ID of the state broadcast has to be unique for each virtual device.
 The data of the state broadcast message starts with the type ID of the virtual device.
 The 2 least significant bits of the type ID are reserved.
-Therefore virtual device type IDs start from 0x04.
+Therefore, the lowest virtual device type IDs is 0x04.
 
 | **Field**       | Msg Identifier  | Data Byte 0  | Data Bytes 1..n       |
 | --------------- | --------------- | ------------ | --------------------- |
