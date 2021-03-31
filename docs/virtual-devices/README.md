@@ -9,6 +9,6 @@ The virtual device type is the type of a virtual device configured on the WomoLI
 
 |                      Device Type | Description                                             |
 | -------------------------------: | ------------------------------------------------------- |
-| [`0x04`](0x04-bistable-relay.md) | Simple relay which can be SET or RESET                  |
+| [`0x04`](0x04-relay.md) | Simple relay which can be SET or RESET                  |
 |     [`0x05`](0x05-gas-sensor.md) | Pressure, humidity and temperature sensor (e.g. BME680) |
 |  [`0x06`](0x06-planar-heater.md) | Planar/Autoterm Air 2/4D diesel heater                  |
