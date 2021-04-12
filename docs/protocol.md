@@ -31,13 +31,13 @@ Virtual devices are the interface to physical devices and take care of the proto
 │ Client        ├───────┼─┤     │ ┌───────────────┐ │  ┌──────────────────┐
 | Display Unit 1|       | ├─────┼─┤ Virtual Device| |  | Physical Device  |
 │               │───────┤ |     | | Heater        ├─┼──┤                  │
-└───────────────┘       ├─┼─────┼─┤ VD-ID: 0xF1   │ │  │ Diesel Heater    │
+└───────────────┘       ├─┼─────┼─┤ VD-ID: 0x06   │ │  │ Diesel Heater    │
                         │ │     │ └───────────────┘ │  └──────────────────┘
 ┌───────────────┐       │ │     │                   │
 │ Client        ├───────┼─┤     │ ┌───────────────┐ │  ┌──────────────────┐
 │ Display Unit 2│       │ ├─────┼─┤ Virtual Device│ │  │ Physical Device  │
 │               ├───────┤ │     │ │ Water Tank    ├─┼──┤                  │
-└───────────────┘       ├─┼─────┼─┤ VD-ID: 0x05   │ │  │ Water Tank Sensor│
+└───────────────┘       ├─┼─────┼─┤ VD-ID: 0x09   │ │  │ Water Tank Sensor│
                         │ │     │ └───────────────┘ │  └──────────────────┘
 ┌───────────────┐       │ │     │         .         │
 │ Client        ├───────┼─┤     │         .         │
@@ -63,16 +63,11 @@ In order to prioritize command messages on the bus, the message ID for command m
 
 Therefore, WomoLIN uses CAN bus message identifiers in the following format:
 
-Command messages have the MSB of the CAN message identifier set to 1, whereas state broadcast must have the MSB set to 0.
-The next two bits are reserved.
-The remaining 8 bits of the CAN message identifier are set to the ID of the virtual device, which is source of the states in a state broadcast message, or target of the command message sent by a client.
-This ensures that commands are always prioritized on the bus and makes it easier for the main unit to identify commands.
+| **Bit (MSB to LSB)** | 10..8                                                                   | 7..0  |
+| -------------------- | ----------------------------------------------------------------------- | ----- |
+| **Description**      | Message type:<br/>`0` for state broadcasts<br/>`1` for command messages | VD-ID |
 
-| **Bit (MSB to LSB)** | 10                                                    | 9..8     | 7..0  |
-| -------------------- | ----------------------------------------------------- | -------- | ----- |
-| **Description**      | `0` for state broadcasts<br/>`1` for command messages | reserved | VD-ID |
-
-**Example:** Using the VD-IDs from _Fig.1_, a state broadcast of the virtual device with name "Heater" would be 0x0F1, whereas the message ID of a command message targeting the virtual device would be 0x5F1.
+**Example:** Using the VD-IDs from _Fig.1_, a state broadcast of the virtual device with name "Heater" would be 0x006, whereas the message ID of a command message targeting the virtual device would be 0x106.
 
 ### State Broadcast Messages
 
@@ -87,7 +82,7 @@ Therefore, the lowest virtual device type is 0x04.
 | **Field**       | Msg Identifier  | Data Byte 0  | Data Bytes 1..n       |
 | --------------- | --------------- | ------------ | --------------------- |
 | **Description** | `0x000` + VD-ID | VD type      | states of the VD      |
-| **Pos. values** | `0x001..0x3FF`  | `0x04..0xFF` | `0x00..0xFF` for each |
+| **Pos. values** | `0x001..0x0FF`  | `0x04..0xFF` | `0x00..0xFF` for each |
 
 _Table.1: Fields of a state broadcast message_
 
@@ -100,10 +95,12 @@ The first byte of the data refers to the type of the command for the virtual dev
 The 2 least significant bits of the type are reserved.
 Therefore, the lowest command type for a virtual device is 0x04.
 
+If a command type is not known to a targeted virtual device, the command will be dropped.
+
 | **Field**       | Msg Identifier  | Data Byte 0  | Data Bytes 1..n        |
 | --------------- | --------------- | ------------ | ---------------------- |
-| **Description** | `0x400` + VD-ID | command type | parameters for command |
-| **Pos. values** | `0x401..0x4FF`  | `0x04..0xFF` | `0x00..0xFF` for each  |
+| **Description** | `0x100` + VD-ID | command type | parameters for command |
+| **Pos. values** | `0x101..0x1FF`  | `0x04..0xFF` | `0x00..0xFF` for each  |
 
 _Table.2: Fields of a command message_
 
@@ -112,4 +109,3 @@ _Table.2: Fields of a command message_
 - Device awaited by client, but state not broadcasted by any main unit: How to handle this?
 - Talk about line termination in "Physical Layer"?
 - Requesting state update from virtual device? May be needed if broadcasting frequency is too low. Could be write to ID with no data.
-- Acknowledge command messages?

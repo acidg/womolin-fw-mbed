@@ -34,7 +34,6 @@ typedef enum {
 } ALTx;
 
 typedef enum {
-
     PA_0       = 0x00,
     PA_0_ALT0  = PA_0  | ALT0, // same pin used for alternate HW
     PA_1       = 0x01,
@@ -216,6 +215,7 @@ typedef enum {
 
     // Standardized LED and button names
     LED1    = PB_0,
+    SIGNAL_LED = LED1,
 
     /**** USB FS pins ****/
     USB_OTG_FS_DM = PA_11,
@@ -249,6 +249,20 @@ typedef enum {
     SYS_WKUP3 = PE_6,
     SYS_WKUP4 = PA_2,
     SYS_WKUP5 = PC_5,
+
+    /**** WomoLIN specifics ****/
+    USART1_TX_CTRL = PB_6,
+    USART1_RX_CTRL = PB_7,
+    USART2_TX_LIN = PA_2,
+    USART2_RX_LIN = PA_3,
+    USART3_TX_SER = PC_4,
+    USART3_RX_SER = PC_5,
+    USART4_TX_GSM = PA_0,
+    USART4_RX_GSM = PA_1,
+    USART5_TX_GSM = PA_0,
+    LPUART_TX_RS485 = PB_10,
+    LPUART_RX_RS485 = PB_11,
+    LPUART_RTS_DE_RS485 = PB_12,
 
     // Not connected
     NC = (int)0xFFFFFFFF
