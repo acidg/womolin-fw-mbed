@@ -1,14 +1,12 @@
 #ifndef DEVICE_VIRTUALDEVICEBASE_H_
 #define DEVICE_VIRTUALDEVICEBASE_H_
 
-#include <type_traits>
-
 #include "DeviceStateBase.h"
 #include "ICommand.h"
 
 namespace mainunit {
 
-template<typename T> // TODO: Make sure T extends DeviceStateBase
+template<typename T>// TODO: Make sure T extends DeviceStateBase
 
 /**
  * Devices are single external peripherals connected to the WomoLIN board.

@@ -6,26 +6,28 @@
 #include "mbed.h"
 #include "VirtualDeviceBase.h"
 #include "RelayDevice.h"
+#include "DeviceStateUpdateManager.h"
+#include "ControlBusManager"
 
 #define BLINKING_RATE 500ms
 
 template<typename T>
 
 mainunit::VirtualDeviceBase<T> virtualDevices[] = {
-		mainunit::RelayDevice { 1 }
+		mainunit::RelayDevice { 1 }, // Light
+		mainunit::RelayDevice { 2 }  // Pump
 };
+
+ControlBusManager controlBusManager{};
+DeviceStateUpdateManager deviceStateUpdateManager{};
 
 int main() {
 	// Initialise the digital pin LED1 as an output
 	DigitalOut led(SIGNAL_LED);
 
-	AnalogIn test(ADC_TEMP);
+	// Setup CAN interface
+	// Setup managers for hardware
 
-	BufferedSerial uart_ctrl(USART1_TX_CTRL, USART1_RX_CTRL, 115200);
-
-	while (true) {
-		led = !led;
-		uart_ctrl.write("Hello World!\n", 14);
-		ThisThread::sleep_for(BLINKING_RATE);
-	}
+	// Start scheduler for devices
+	DeviceStateUpdateManager{}
 }
