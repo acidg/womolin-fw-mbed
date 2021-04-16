@@ -2,7 +2,7 @@
 Firmware for the WomoLIN Main Unit based on [Mbed](https://os.mbed.com/).
 
 ## Build
-1. Install the mbed-cli](https://os.mbed.com/docs/mbed-os/v6.9/quick-start/build-with-mbed-cli.html)
+1. Install the [mbed-cli](https://os.mbed.com/docs/mbed-os/v6.9/quick-start/build-with-mbed-cli.html)
 2. Run `mbed compile -m WOMOLIN_V2 -t GCC_ARM`
 
 ## Development
